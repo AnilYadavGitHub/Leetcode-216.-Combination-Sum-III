@@ -1,0 +1,57 @@
+class Solution {
+private:
+void solve(vector<int>&arr ,vector<vector<int>> &ans ,  int n , vector<int>&output , int k , int idx){
+
+      if (output.size() == k) {
+        int s = accumulate(output.begin(), output.end(), 0);
+        if (s == n) {
+            ans.push_back(output);
+        }
+        return;
+    }
+
+    for (int i = idx; i < arr.size(); i++) {
+        swap(arr[i], arr[idx]);
+        output.push_back(arr[idx]);
+        solve(arr, ans, n ,output,  k, idx + 1);
+        output.pop_back();
+        swap(arr[i], arr[idx]);
+    }
+
+}     
+public:
+    vector<vector<int>> combinationSum3(int k, int n) {
+
+        vector<int>arr;
+
+        for(int i = 1 ; i <= 9 ; i++){
+            arr.push_back(i);
+        }  
+        vector<int>output;
+
+        vector<vector<int>>ans;
+
+        solve(arr , ans , n , output , k , 0);
+       
+       
+       set<vector<int>>st;
+       vector<vector<int>>res;
+       
+       
+       for(auto i : ans){
+           
+           sort(i.begin() , i.end());
+           
+           st.insert(i);
+       }
+      
+
+      for(auto i : st){
+          res.push_back(i);
+      }
+      
+      return res;
+
+
+    }
+};
